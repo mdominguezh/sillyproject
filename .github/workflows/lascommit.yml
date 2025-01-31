@@ -9,4 +9,6 @@ jobs:
               with:
                 fetch-depth: 0
             - name: Last git commit before a merge
+              run: git --no-pager log --reflog
+            - name: Last git commit before a merge
               run: git log HEAD@{1} -1
