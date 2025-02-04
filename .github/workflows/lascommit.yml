@@ -19,4 +19,4 @@ jobs:
               run: LAST_COMMIT=$(git rev-list --ancestry-path branch..main | tail -1) >> $GITHUB_OUTPUT
               id: last_commit
             - name: Show Last git commit before a merge
-              run: git log ${steps.last_commit.outputs.LAST_COMMIT}
+              run: git log ${{steps.last_commit.outputs.LAST_COMMIT}}
