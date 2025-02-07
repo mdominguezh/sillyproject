@@ -20,7 +20,9 @@ jobs:
             #   run: git log HEAD@{1} -1
             #   if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true    
             - name: Last git commit before a merge
-              run: LAST_COMMIT=$(git rev-list --ancestry-path "${{ steps.extract_branch.outputs.branch }}..origin/main" | tail -1) >> $GITHUB_OUTPUT
+              run: |
+                git fetch
+                LAST_COMMIT=$(git rev-list --ancestry-path "${{ steps.extract_branch.outputs.branch }}..origin/main" | tail -1) >> $GITHUB_OUTPUT
               id: last_commit
             - name: Show Last git commit before a merge
               run: git log ${{steps.last_commit.outputs.LAST_COMMIT}}
