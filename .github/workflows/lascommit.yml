@@ -18,6 +18,12 @@ jobs:
               env:
                 GITHUB_CONTEXT: ${{ toJSON(github) }}
               run: echo "$GITHUB_CONTEXT"
+            - name: Dump GitHub context
+              env:
+                GITHUB_CONTEXT: ${{ toJSON(github) }}
+              run: |
+                echo ${GITHUB_SHA} 
+                echo ${github.event.pull_request.head.sha}
             - name: Get all commit
               run: git --no-pager log --reflog
             # - name: Last git commit before a merge
