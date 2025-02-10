@@ -30,17 +30,17 @@ jobs:
             - name: Last git commit before a merge
               run: |
                 git fetch
-                echo $BRANCH
-                git rev-list --ancestry-path $BRANCH..origin/main | tail -1
+                echo ${BRANCH}
+                git rev-list --ancestry-path ${BRANCH}..origin/main | tail -1
                 git rev-list --ancestry-path ${{ steps.extract_branch.outputs.branch }}..origin/main | tail -1
-                LAST_COMMIT=$(git rev-list --ancestry-path $BRANCH..origin/main | tail -1) >> $GITHUB_OUTPUT
+                LAST_COMMIT=$(git rev-list --ancestry-path ${BRANCH}..origin/main | tail -1) >> $GITHUB_OUTPUT
               id: last_commit
               env:
                 BRANCH: ${{ steps.extract_branch.outputs.branch }}
             - name: Show Last git commit before a merge
               run: |
-                echo $LAST_COMMIT
-                git log $LAST_COMMIT
+                echo ${LAST_COMMIT}
+                git log ${LAST_COMMIT}
               env:
                 LAST_COMMIT: ${{ steps.last_commit.outputs.LAST_COMMIT }}              
             - name: Last git commit before a merge
