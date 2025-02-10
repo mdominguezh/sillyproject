@@ -1,5 +1,7 @@
 on:
     push:
+      branches:
+        - main
     pull_request:
 jobs:
     test_schedule:
@@ -8,8 +10,28 @@ jobs:
             - uses: actions/checkout@v4
               with:
                 fetch-depth: 0
+            - name: Extract branch name
+              shell: bash
+              run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+              id: extract_branch
+            - name: Dump GitHub context
+              env:
+                GITHUB_CONTEXT: ${{ toJSON(github) }}
+              run: echo "$GITHUB_CONTEXT"
+            - name: Dump GitHub context
+              env:
+                GITHUB_CONTEXT: ${{ toJSON(github) }}
+              run: |
+                echo ${{ github.event.pull_request.base.sha }}
             - name: Get all commit
               run: git --no-pager log --reflog
+            # - name: Last git commit before a merge
+            #   run: git log HEAD@{1} -1
+            #   if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true    
             - name: Last git commit before a merge
-              run: git log HEAD@{1} -1
-              if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true             
+              run: |
+                git fetch
+                LAST_COMMIT=$(git rev-list --ancestry-path "${{ steps.extract_branch.outputs.branch }}..origin/main" | tail -1) >> $GITHUB_OUTPUT
+              id: last_commit
+            - name: Show Last git commit before a merge
+              run: git log ${{steps.last_commit.outputs.LAST_COMMIT}}
