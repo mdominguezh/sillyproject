@@ -12,10 +12,15 @@ jobs:
               run: git --no-pager log --reflog
             - name: Git Last commit 2
               run: |
-                echo ${{ github.event.pull_request.base.ref }}
-                echo ${{ github.event.pull_request.base.sha }}
-                echo ${{ github.event.base_ref }}
-                echo ${{ github.event.before }}
+                  echo BASE_REF: $BASE_REF
+                  echo BASE_SHA: $BASE_SHA
+                  echo EVENT_REF: $EVENT_REF
+                  echo EVENT_BEFORE: $EVENT_BEFORE
+              env:
+                BASE_REF: ${{ github.event.pull_request.base.ref }}
+                BASE_SHA: echo ${{ github.event.pull_request.base.sha }}
+                EVENT_REF: echo ${{ github.event.base_ref }}
+                EVENT_BEFORE: echo ${{ github.event.before }}
             - name: Last git commit before a merge
               run: git log HEAD@{1} -1
               if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true             
