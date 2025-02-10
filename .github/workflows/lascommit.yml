@@ -30,9 +30,12 @@ jobs:
             - name: Last git commit before a merge
               run: |
                 git fetch
-                echo ${BRANCH}
+                echo "${BRANCH}"
+                echo "---------------------------"
                 git rev-list --ancestry-path ${BRANCH}..origin/main | tail -1
+                echo "---------------------------"
                 git rev-list --ancestry-path ${{ steps.extract_branch.outputs.branch }}..origin/main | tail -1
+                echo "---------------------------"
                 LAST_COMMIT=$(git rev-list --ancestry-path ${BRANCH}..origin/main | tail -1) >> $GITHUB_OUTPUT
               id: last_commit
               env:
@@ -48,3 +51,9 @@ jobs:
               if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true      
             - name: Get all commit
               run: git --no-pager log --reflog       
+            - name: Hello world
+              run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
+              env:
+                FIRST_NAME: Mona
+                middle_name: The
+                Last_Name: Octocat
