@@ -32,6 +32,8 @@ jobs:
                 git fetch
                 echo "${BRANCH}"
                 echo "---------------------------"
+                git branch
+                echo "---------------------------"
                 git rev-list --ancestry-path ${BRANCH}..origin/main | tail -1
                 echo "---------------------------"
                 git rev-list --ancestry-path ${{ steps.extract_branch.outputs.branch }}..origin/main | tail -1
