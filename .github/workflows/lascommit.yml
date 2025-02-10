@@ -30,7 +30,7 @@ jobs:
             - name: Last git commit before a merge
               run: |
                 git fetch
-                git fetch origin/main
+                git checkout origin/main
                 echo "${BRANCH}"
                 echo "---------------------------"
                 git branch
