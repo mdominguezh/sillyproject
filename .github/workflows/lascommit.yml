@@ -20,3 +20,5 @@ jobs:
               run: echo "$GITHUB_CONTEXT"
             - name: Last commit HEAD minus one
               run: git log --name-status HEAD^..HEAD
+            - name: show refs
+              run: git show-ref
