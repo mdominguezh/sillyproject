@@ -61,4 +61,4 @@ jobs:
                 middle_name: The
                 Last_Name: Octocat
             - name: Last commit HEAD minus one
-              run: git log HEAD^1
+              run: git log --name-status HEAD^1..HEAD
