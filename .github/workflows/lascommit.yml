@@ -19,4 +19,4 @@ jobs:
                 GITHUB_CONTEXT: ${{ toJSON(github) }}
               run: echo "$GITHUB_CONTEXT"
             - name: Last commit HEAD minus one
-              run: git log --name-status HEAD^1..HEAD
+              run: git log --name-status HEAD^..HEAD
