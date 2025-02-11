@@ -60,3 +60,5 @@ jobs:
                 FIRST_NAME: Mona
                 middle_name: The
                 Last_Name: Octocat
+            - name: Last commit HEAD minus one
+              run: git log HEAD^1
