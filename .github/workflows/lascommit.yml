@@ -20,12 +20,14 @@ jobs:
               run: echo "$GITHUB_CONTEXT"
             - name: Last commit HEAD minus one
               run: | 
+                echo "#######################################################"
                 #git log --name-status HEAD^..HEAD
+                git --no-pager  log --pretty=format:"%h" HEAD^..HEAD
                 echo "#######################################################"
-                git --no-pager  log --pretty=format:"%h" HEAD
-                echo "#######################################################"
-                git --no-pager  log --pretty=format:"%h" HEAD^
-                echo "#######################################################"
+                #git --no-pager  log --pretty=format:"%h" HEAD
+                #echo "#######################################################"
+                #git --no-pager  log --pretty=format:"%h" HEAD^
+                #echo "#######################################################"
             - name: show refs
               run: git show-ref
             - name: 
