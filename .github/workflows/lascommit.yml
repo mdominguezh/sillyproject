@@ -18,20 +18,20 @@ jobs:
               env:
                 GITHUB_CONTEXT: ${{ toJSON(github) }}
               run: echo "$GITHUB_CONTEXT"
-            - name: Dump GitHub context
-              env:
-                GITHUB_CONTEXT: ${{ toJSON(github) }}
+            - name: Last commit HEAD minus one
+              run: | 
+                echo "#######################################################"
+                #git log --name-status HEAD^..HEAD
+                git --no-pager  log --pretty=format:"%h" HEAD^..HEAD
+                echo "#######################################################"
+                #git --no-pager  log --pretty=format:"%h" HEAD
+                #echo "#######################################################"
+                #git --no-pager  log --pretty=format:"%h" HEAD^
+                #echo "#######################################################"
+            - name: show refs
+              run: git show-ref
+            - name: 
               run: |
-                echo ${{ github.event.pull_request.base.sha }}
-            - name: Get all commit
-              run: git --no-pager log --reflog
-            # - name: Last git commit before a merge
-            #   run: git log HEAD@{1} -1
-            #   if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true    
-            - name: Last git commit before a merge
-              run: |
-                git fetch
-                LAST_COMMIT=$(git rev-list --ancestry-path "${{ steps.extract_branch.outputs.branch }}..origin/main" | tail -1) >> $GITHUB_OUTPUT
-              id: last_commit
-            - name: Show Last git commit before a merge
-              run: git log ${{steps.last_commit.outputs.LAST_COMMIT}}
+                git rev-parse --short HEAD
+                echo "---------------------------------"
+                git rev-parse --short HEAD^
