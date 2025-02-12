@@ -22,9 +22,9 @@ jobs:
               run: | 
                 #git log --name-status HEAD^..HEAD
                 echo "#######################################################"
-                git log --name-status HEAD
+                git --no-pager  log --pretty=format:"%h" HEAD
                 echo "#######################################################"
-                git log --name-status HEAD^
+                git --no-pager  log --pretty=format:"%h" HEAD^
                 echo "#######################################################"
             - name: show refs
               run: git show-ref
