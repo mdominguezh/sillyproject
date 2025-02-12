@@ -21,13 +21,13 @@ jobs:
             - name: Last commit HEAD minus one
               run: | 
                 echo "#######################################################"
-                #git log --name-status HEAD^..HEAD
                 git --no-pager  log --pretty=format:"%h" HEAD^..HEAD
-                echo "#######################################################"
+                echo "\n#######################################################"
                 #git --no-pager  log --pretty=format:"%h" HEAD
                 #echo "#######################################################"
                 #git --no-pager  log --pretty=format:"%h" HEAD^
                 #echo "#######################################################"
+                git log --name-status HEAD^..HEAD
             - name: show refs
               run: git show-ref
             - name: 
