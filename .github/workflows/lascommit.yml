@@ -45,3 +45,8 @@ jobs:
               run: |
                 echo "github.ref_name:" ${{ github.ref_name }}
                 echo "github.ref:" ${{ github.ref }}
+            - name: prueba if en release FIXED
+              if: github.ref_name == 'main' || startsWith(github.ref_name, 'release/')
+              run: |
+                echo "github.ref_name:" ${{ github.ref_name }}
+                echo "github.ref:" ${{ github.ref }}
