@@ -37,7 +37,6 @@ jobs:
             #     echo "---------------------------------"
             #     git rev-parse --short HEAD^
             - name: prueba sin IF
-              if: github.ref_name == 'main' || startsWith(github.ref, 'release/')
               run: |
                 echo "github.ref_name:" ${{ github.ref_name }}
                 echo "github.ref:" ${{ github.ref }}
