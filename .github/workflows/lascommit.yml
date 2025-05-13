@@ -7,31 +7,41 @@ jobs:
     test_schedule:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-            - name: Extract branch name
-              shell: bash
-              run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-              id: extract_branch
-            - name: Dump GitHub context
-              env:
-                GITHUB_CONTEXT: ${{ toJSON(github) }}
-              run: echo "$GITHUB_CONTEXT"
-            - name: Last commit HEAD minus one
-              run: | 
-                echo "#######################################################"
-                git --no-pager  log --pretty=format:"%h" HEAD^..HEAD
-                echo "\n#######################################################"
-                #git --no-pager  log --pretty=format:"%h" HEAD
-                #echo "#######################################################"
-                #git --no-pager  log --pretty=format:"%h" HEAD^
-                #echo "#######################################################"
-                git log --name-status HEAD^..HEAD
-            - name: show refs
-              run: git show-ref
-            - name: 
+            # - uses: actions/checkout@v4
+            #   with:
+            #     fetch-depth: 0
+            # - name: Extract branch name
+            #   shell: bash
+            #   run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+            #   id: extract_branch
+            # - name: Dump GitHub context
+            #   env:
+            #     GITHUB_CONTEXT: ${{ toJSON(github) }}
+            #   run: echo "$GITHUB_CONTEXT"
+            # - name: Last commit HEAD minus one
+            #   run: | 
+            #     echo "#######################################################"
+            #     git --no-pager  log --pretty=format:"%h" HEAD^..HEAD
+            #     echo "\n#######################################################"
+            #     #git --no-pager  log --pretty=format:"%h" HEAD
+            #     #echo "#######################################################"
+            #     #git --no-pager  log --pretty=format:"%h" HEAD^
+            #     #echo "#######################################################"
+            #     git log --name-status HEAD^..HEAD
+            # - name: show refs
+            #   run: git show-ref
+            # - name: 
+            #   run: |
+            #     git rev-parse --short HEAD
+            #     echo "---------------------------------"
+            #     git rev-parse --short HEAD^
+            - name: prueba sin IF
+              if: github.ref_name == 'main' || startsWith(github.ref, 'release/')
               run: |
-                git rev-parse --short HEAD
-                echo "---------------------------------"
-                git rev-parse --short HEAD^
+                echo "github.ref_name:" ${{ github.ref_name }}
+                echo "github.ref:" ${{ github.ref }}
+            - name: prueba if en release
+              if: github.ref_name == 'main' || startsWith(github.ref, 'release/')
+              run: |
+                echo "github.ref_name:" ${{ github.ref_name }}
+                echo "github.ref:" ${{ github.ref }}
